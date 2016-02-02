@@ -17,9 +17,35 @@ object List {
     case Cons(x, xs) => x * product(xs)
   }
 
+  // Exercise 2
   def tail[A](as: List[A]): List[A] = as match {
     case Nil => List()
     case Cons(x, xs) => xs
+  }
+
+  // NOTE: not sure how to handle a Nil case here
+  def head[A](xs: List[A]): A = xs match {
+    case Cons(x, xs) => x
+  }
+
+  // Exercise 3
+  def drop[A](count: Int, as: List[A]): List[A] = {
+    @annotation.tailrec
+    def go(xs: List[A], iter: Int): List[A] = {
+      if(iter == count) xs
+      else go(tail(xs), (iter + 1))
+    }
+    go(as, 0)
+  }
+
+  // Exercise 4
+  def dropWhile[A](l: List[A])(f: A => Boolean): List[A] = {
+    @annotation.tailrec
+    def go(xs: List[A]): List[A] = {
+      if(f(head(xs))) go(tail(xs))
+      else xs
+    }
+    go(l)
   }
 
   // this is what allows List to be used like: List(1,2,3,4) or List("hi", "bye")
@@ -45,7 +71,15 @@ val x = List(1,2,3,4,5) match {
 (x == 3) // true
 
 val thing = List.product(List(1.0, 2.0, 3.0))
-
+(thing == 6.0)
 
 val subList = List.tail[Int](List(1,2,3))
 (subList == List(2,3))
+
+val justOne = List.drop[Int](4, List(1,2,3,4,5))
+(justOne == List(5))
+
+val whatTheFuck = List.head[Int](List(8, 2, 4))
+
+val pleaseGod = List.dropWhile[Int](List(1,4,1,2,5))_
+pleaseGod(x => x % 2 != 0)
