@@ -79,7 +79,8 @@ val subList = List.tail[Int](List(1,2,3))
 val justOne = List.drop[Int](4, List(1,2,3,4,5))
 (justOne == List(5))
 
-val whatTheFuck = List.head[Int](List(8, 2, 4))
+val headVal = List.head[Int](List(8, 2, 4))
+(headVal == 8)
 
-val pleaseGod = List.dropWhile[Int](List(1,4,1,2,5))_
-pleaseGod(x => x % 2 != 0)
+val listToMap = List.dropWhile[Int](List(1,4,1,2,5))_
+(listToMap(x => x % 2 != 0) == List(4,1,2,5))
